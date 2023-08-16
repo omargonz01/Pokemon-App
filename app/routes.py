@@ -12,13 +12,14 @@ def home():
 def get_pokemanes():
     form = PokemaneForm()
     pokemon_names = []
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate_on_submit():
         pokemon_names = form.pokemane.data
+        print(pokemon_names)
 
-    url = "https://pokeapi.co/api/v2/pokemon/"
-    pokemanes_deets = []
-    for pokemon in pokemon_names:
-        response = requests.get(url + pokemon)
+        url = "https://pokeapi.co/api/v2/pokemon/"
+    
+
+        response = requests.get(url + pokemon_names)
         if response.ok:
 
             data = response.json()
@@ -39,14 +40,10 @@ def get_pokemanes():
                 "hp_base_stat": hp_base_stat,
                 "defense_base_stat": defense_base_stat
             }
-            pokemanes_deets.append(pokemanes_dict)
+            return render_template("pokemon.html", pokemanes_dict=pokemanes_dict, form=form)
             
         else:
             return render_template("pokemon.html", form=form)
         
-    return render_template("pokemon.html", pokemanes_deets=pokemanes_deets, form=form)
+    return render_template("pokemon.html", form=form)
 
-#  for pokemon in pokemon_names:
-#                    ^^^^^^^^^^^^^^
-# UnboundLocalError: cannot access local variable 'pokemon_names' 
-# where it is not associated with a value
