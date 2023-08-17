@@ -1,0 +1,27 @@
+{% extends 'base.html '%}
+
+{% block styles %}
+  <link rel="stylesheet" href="../styles/login.css"> 
+{% endblock %}
+
+{% block title %}
+  Login Page
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <!-- <img src="jpg" alt=" Logo"> -->
+    <h1>Login</h1>
+    <form method="POST" class="w-50 mx-auto">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.email(class='form-control', placeholder='Email Address')}}
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          {{ form.password(class='form-control', placeholder='Password') }}
+        </div>
+        {{ form.submit_btn(class='btn btn-dark d-block mx-auto mt-5') }}
+    </form>
+  </div>
+{% endblock %}
