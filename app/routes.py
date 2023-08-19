@@ -1,33 +1,37 @@
-from flask import request, render_template
+from flask import request, render_template, flash, redirect, url_for 
 import requests
 from app import app
 from .forms import PokemaneForm, SignupForm, LoginForm
+from flask_login import login_user, logout_user, current_user, login_required
+from .models import User, db
+from werkzeug.security import check_password_hash
 
 @app.route("/")
 @app.route("/home")
 def home():
-    return 'Hello User, Glad You Could Join Us'
+    return render_template('home.html')
 
-# temp database to test
-TEST_USERS = {
-    'sk8andthra5h@gmail.com': {
-        'name': 'OG',
-        'password': 'killawhale1'
-    }
-}
-
+# HTTP Methods & Rendering Template
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     form = SignupForm()
     if request.method == 'POST' and form.validate_on_submit():
-        name = f'{form.first_name.data} {form.last_name.data}'
-        email = form.email.data
+
+        # Grabs out sign up form data
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+        email = form.email.data.lower()
         password = form.password.data
-        TEST_USERS[email] = {
-            'name': name,
-            'password': password
-        }
-        return f'Thanks for testing {name}, we see you!'
+        
+        # creates an instance of the User Model
+        new_user = User(first_name, last_name, email, password)
+
+        # adds new user to database
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash(f'Thank you for signing up {new_user.first_name}! :)', 'success')
+        return redirect(url_for('login'))
     else:
         return render_template('signup.html', form=form)
 
@@ -37,15 +41,26 @@ def login():
     if request.method == 'POST' and form.validate_on_submit():
         email = form.email.data.lower()
         password = form.password.data
-        if email in TEST_USERS and password == TEST_USERS[email]['password']:
-            return f'Hello, {TEST_USERS[email]["name"]}, thanks for coming back!'
+        # query the user onject from database
+        queried_user = User.query.filter(User.email == email).first()
+        if queried_user and check_password_hash(queried_user.password, password):
+            login_user(queried_user)
+            flash(f'Hello {queried_user.first_name}, thanks for coming back! :)', 'success')
+            return redirect(url_for('home'))
+
         else:
-            return 'Invalid email or password, try again playa'
+            flash('Invalid email or password, try again playa', 'danger')
+            return redirect(url_for('login'))
     else:
-        print('not valid, try again')
         return render_template('login.html', form=form)
 
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
 @app.route("/pokemon", methods=['GET', 'POST'])
+@login_required
 def get_pokemanes():
     form = PokemaneForm()
     pokemon_names = []
