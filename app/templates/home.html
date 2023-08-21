@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 
+{% block styles %}
+    <link rel="stylesheet" href="../static/styles/home.css">
+{% endblock %}
+
 {% block title %}
     Home Page
 {% endblock %}
 
+
 {% block content %}
 {% include './includes/nav.html'%}
-<h1>Hello User, Glad You Can Join Us</h1>
+    <div class="container">
+        <h2 class="home-h2">Welcome {{ current_user.first_name }}, Glad To Have You Here!</h2>
+    </div>
 {% endblock %}

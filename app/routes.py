@@ -56,7 +56,10 @@ def login():
 
 @app.route("/logout")
 def logout():
+    # checks if user is athenticated in order to flash his name when he clicks logout
+    user_first_name = current_user.first_name if current_user.is_authenticated else "User"
     logout_user()
+    flash(f"Thanks for coming, {user_first_name}! See ya next time!.", "primary")
     return redirect(url_for('home'))
 
 @app.route("/pokemon", methods=['GET', 'POST'])
@@ -65,7 +68,7 @@ def get_pokemanes():
     form = PokemaneForm()
     pokemon_names = []
     if request.method == 'POST' and form.validate_on_submit():
-        pokemon_names = form.pokemane.data
+        pokemon_names = form.pokemane.data.lower()
         print(pokemon_names)
 
         url = "https://pokeapi.co/api/v2/pokemon/"

@@ -1,7 +1,7 @@
 {% extends 'base.html '%}
 
 {% block styles %}
-  <link rel="stylesheet" href="../styles/login.css"> 
+  <link rel="stylesheet" href="../static/styles/login.css"> 
 {% endblock %}
 
 {% block title %}
@@ -16,7 +16,7 @@
         {{ form.hidden_tag() }}
         <div class="mb-3">
           {{ form.email(class='form-control', placeholder='Email Address')}}
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          <div id="emailHelp" class="form-text">It's ok you're safe here. We'll never share or sell your email info.</div>
         </div>
         <div class="mb-3">
           {{ form.password(class='form-control', placeholder='Password') }}

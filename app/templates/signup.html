@@ -1,7 +1,7 @@
 {% extends 'base.html '%}
 
 {% block styles %}
-    <link rel="stylesheet" href="../styles/login.css"> 
+    <link rel="stylesheet" href="../static/styles/login.css"> 
 {% endblock %}
 
 {% block title %}
@@ -10,7 +10,7 @@
 
 {% block content %}
   <div class="container">
-      <!-- <img src="#jpg" alt=" Logo"> -->
+      <img src="https://media.giphy.com/media/Jt4pNepKfJdlubVLsK/giphy.gif" alt=" pointing gif "width="300" height="200" >  
       <h1>Sign Up</h1>
       <form method="POST" class="w-50 mx-auto">
           {{ form.hidden_tag() }}
@@ -21,7 +21,7 @@
               {{ form.last_name(class='form-control', placeholder='Last Name')}}
           </div>
           <div class="mb-3">
-            {{ form.email(class='form-control', placeholder='Email Address')}}
+            {{ form.email(class='form-control', placeholder="Email Address - We'll never share or sell your email info :)")}}
           </div>
           <div class="mb-3">
             {{ form.password(class='form-control', placeholder='Password') }}
