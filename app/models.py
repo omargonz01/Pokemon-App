@@ -5,6 +5,12 @@ from flask_login import UserMixin
 
 db = SQLAlchemy()
 
+teams = db.Table(
+    'teams',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('pokemon_id', db.Integer, db.ForeignKey('user.id'))                                                 
+)
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
@@ -20,16 +26,22 @@ class User(db.Model, UserMixin):
         self.password = generate_password_hash(password)
 
 
-class Post(db.Model):
+class Pokemon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String)
-    caption = db.Column(db.String)
-    img_url = db.Column(db.String, nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow())
+    name = db.Column(db.String)
+    sprite_url = db.Column(db.String, nullable=False)
+    attack_base_stat = db.Column(db.Integer)
+    hp_base_stat = db.Column(db.Integer)
+    defense_base_stat = db.Column(db.Integer)
+    ability_name = db.Column(db.String)
+    # date_created = db.Column(db.DateTime, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, title, caption, img_url, user_id):
-        self.title = title
-        self.caption = caption
-        self.img_url = img_url
+    def __init__(self, name, sprite_url, attack_base_stat, hp_base_stat, defense_base_stat, ability_name, user_id):
+        self.name = name
+        self.sprite_url = sprite_url
+        self.attack_base_stat = attack_base_stat
+        self.hp_base_stat = hp_base_stat
+        self.defense_base_stat = defense_base_stat
+        self.ability_name = ability_name
         self.user_id = user_id

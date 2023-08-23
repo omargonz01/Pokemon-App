@@ -35,10 +35,10 @@ Pokemanes
                 <li class="list-group-item">Attack Base Stat: {{ pokemanes_dict.atack_base_stat }}</li>
                 <li class="list-group-item">Ability Name: {{ pokemanes_dict.ability_name }}</li>
             </ul>
-            <!-- <div class="card-body"> can add links here later
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div> -->
+            <div class="card-body"> 
+                <a href="{{ url_for('main.catch_pokemon', pokemon_name=pokemanes_dict.name) }}" class="btn btn-success">Catch {{ pokemanes_dict.name }}</a>
+                <a href="#" class="card-link">Release</a>
+            </div>
         </div>
     </div>
 {% endif %}

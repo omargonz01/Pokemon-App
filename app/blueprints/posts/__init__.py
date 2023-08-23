@@ -1,5 +1,7 @@
-from flask import Blueprint
+# <!-- here for refference only DO NOT RUN  will clean up later-->
 
-posts = Blueprint('posts', __name__, template_folder='posts_templates', url_prefix='/posts')
+# from flask import Blueprint
 
-from . import routes 
+# posts = Blueprint('posts', __name__, template_folder='posts_templates', url_prefix='/posts')
+
+# from . import routes 
