@@ -18,6 +18,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    pokemons = db.relationship('Pokemon', secondary=teams, backref='user_trainers', lazy='dynamic', primaryjoin=(teams.columns.user_id == id), secondaryjoin=(teams.columns.pokemon_id == id))
+
+
 
     def __init__(self,first_name, last_name, email, password):
         self.first_name = first_name
@@ -31,16 +34,17 @@ class Pokemon(db.Model):
     name = db.Column(db.String)
     sprite_url = db.Column(db.String, nullable=False)
     attack_base_stat = db.Column(db.Integer)
+    base_experience = db.Column(db.Integer)
     hp_base_stat = db.Column(db.Integer)
     defense_base_stat = db.Column(db.Integer)
     ability_name = db.Column(db.String)
-    # date_created = db.Column(db.DateTime, default=datetime.utcnow())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    trainers = db.relationship('User', secondary=teams, backref='pokemon_collection', lazy='dynamic', primaryjoin=(teams.columns.pokemon_id == id), secondaryjoin=(teams.columns.user_id == User.id))
 
-    def __init__(self, name, sprite_url, attack_base_stat, hp_base_stat, defense_base_stat, ability_name, user_id):
+    def __init__(self, name, sprite_url, attack_base_stat, base_experience, hp_base_stat, defense_base_stat, ability_name, user_id):
         self.name = name
         self.sprite_url = sprite_url
         self.attack_base_stat = attack_base_stat
+        self.base_experience = base_experience 
         self.hp_base_stat = hp_base_stat
         self.defense_base_stat = defense_base_stat
         self.ability_name = ability_name
