@@ -1,4 +1,4 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 
 {% block styles %}
     <link rel="stylesheet" href="../static/styles/pokemon.css">
@@ -36,10 +36,27 @@ Pokemanes
                 <li class="list-group-item">Ability Name: {{ pokemanes_dict.ability_name }}</li>
             </ul>
             <div class="card-body"> 
-                <a href="{{ url_for('main.catch_pokemon', pokemon_name=pokemanes_dict.name) }}" class="btn btn-success">Catch {{ pokemanes_dict.name }}</a>
-                <a href="#" class="card-link">Release</a>
+                <form method="POST" action="{{ url_for('main.catch_pokemon', pokemon_name=pokemanes_dict.name) }}">
+                    {{ form.hidden_tag() }}
+                    <button type="submit" class="btn btn-success">Catch {{ pokemanes_dict.name }}</button>
+                </form>
+                <!-- <a href="#" class="card-link">Release</a> -->
             </div>
         </div>
+    </div>
+    <h2>Your Team</h2>
+    <div class="card-container">
+        {% for pokemon in current_user.team_pokemons %}
+            <div class="card" style="width: 18rem;">
+                <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ pokemon.name }}</h5>
+                </div>
+                <div class="card-body"> 
+                    <a href="{{ url_for('main.release_pokemon', pokemon_id=pokemon.id) }}" class="btn btn-danger">Release</a>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endif %}
 {% endblock %}

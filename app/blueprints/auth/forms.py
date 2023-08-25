@@ -1,10 +1,12 @@
 from flask_wtf import FlaskForm 
-from wtforms import StringField, SubmitField, EmailField, PasswordField
+from wtforms import StringField, SubmitField, EmailField, PasswordField, HiddenField
 from wtforms.validators import DataRequired, EqualTo
 
 class PokemaneForm(FlaskForm):
     pokemane = StringField('Enter Pokemon Names or Numbers:', validators=[DataRequired()])
     submit_btn = SubmitField(('Submit'))
+    pokemanes_dict = HiddenField()
+
 
 class SignupForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])

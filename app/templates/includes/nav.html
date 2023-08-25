@@ -14,6 +14,12 @@
           <a class="nav-link" href="{{ url_for('main.get_pokemanes') }}">Pokemanes</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.team') }}">Your Team</a> 
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.enemy_teams') }}">The Ops Teams</a> 
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
         </li>
         {% else %}

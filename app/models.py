@@ -7,8 +7,8 @@ db = SQLAlchemy()
 
 teams = db.Table(
     'teams',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('pokemon_id', db.Integer, db.ForeignKey('user.id'))                                                 
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('pokemon_id', db.Integer, db.ForeignKey('pokemon.id'), primary_key=True)                                                 
 )
 
 class User(db.Model, UserMixin):
@@ -18,8 +18,11 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    pokemons = db.relationship('Pokemon', secondary=teams, backref='user_trainers', lazy='dynamic', primaryjoin=(teams.columns.user_id == id), secondaryjoin=(teams.columns.pokemon_id == id))
-
+    team_pokemons = db.relationship(
+        'Pokemon', secondary=teams, 
+        back_populates='trainers', 
+        lazy='dynamic'
+    )
 
 
     def __init__(self,first_name, last_name, email, password):
@@ -27,6 +30,9 @@ class User(db.Model, UserMixin):
         self.last_name = last_name
         self.email = email
         self.password = generate_password_hash(password)
+
+    def can_add_pokemon_to_team(self):
+        return len(list(self.team_pokemons)) < 5  # Maximum team capacity
 
 
 class Pokemon(db.Model):
@@ -38,9 +44,13 @@ class Pokemon(db.Model):
     hp_base_stat = db.Column(db.Integer)
     defense_base_stat = db.Column(db.Integer)
     ability_name = db.Column(db.String)
-    trainers = db.relationship('User', secondary=teams, backref='pokemon_collection', lazy='dynamic', primaryjoin=(teams.columns.pokemon_id == id), secondaryjoin=(teams.columns.user_id == User.id))
-
-    def __init__(self, name, sprite_url, attack_base_stat, base_experience, hp_base_stat, defense_base_stat, ability_name, user_id):
+    trainers = db.relationship(
+        'User', 
+        secondary=teams, 
+        back_populates='team_pokemons',
+        lazy='dynamic')
+        # primaryjoin=(teams.c.pokemon_id == id), secondaryjoin=(teams.c.user_id == User.id))
+    def __init__(self, name, sprite_url, attack_base_stat, base_experience, hp_base_stat, defense_base_stat, ability_name):
         self.name = name
         self.sprite_url = sprite_url
         self.attack_base_stat = attack_base_stat
@@ -48,4 +58,4 @@ class Pokemon(db.Model):
         self.hp_base_stat = hp_base_stat
         self.defense_base_stat = defense_base_stat
         self.ability_name = ability_name
-        self.user_id = user_id
+        

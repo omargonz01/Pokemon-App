@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="../static/styles/pokemon.css">
+{% endblock %}
+
+{% block title %}
+The Ops Teams
+{% endblock %}
+
+{% block content %}
+{% include './includes/nav.html'%}
+
+<h2>The Ops' Teams</h2>
+  <ul>
+    {% for user in other_users %}
+      <li>{{ user.first_name }}'s Team: 
+        {% for pokemon in user.team_pokemons %}
+          {{ pokemon.name }} |
+        {% endfor %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
