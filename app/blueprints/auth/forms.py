@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, EmailField, PasswordField, HiddenF
 from wtforms.validators import DataRequired, EqualTo
 
 class PokemaneForm(FlaskForm):
-    pokemane = StringField('Enter Pokemon Names or Numbers:', validators=[DataRequired()])
+    pokemane = StringField('Enter Pokemon Name or Number:', validators=[DataRequired()])
     submit_btn = SubmitField(('Submit'))
     pokemanes_dict = HiddenField()
 

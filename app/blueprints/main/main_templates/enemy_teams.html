@@ -11,8 +11,40 @@ The Ops Teams
 {% block content %}
 {% include './includes/nav.html'%}
 
-<h2>The Ops' Teams</h2>
-  <ul>
+
+<h1>The Ops' Teams</h1>
+    
+{% for user in other_users %}
+  <h2>{{ user.first_name }}'s Team:</h2>
+  <a href="{{ url_for('main.battle', enemy_user_id=user.id) }}" class="btn btn-primary">Attack</a>
+  <div class="card-container">
+    {% for pokemon in user.team_pokemons %}
+      <div class="card" style="width: 18rem;">
+        <h5 class="card-title">{{ pokemon.name.title() }}</h5>
+        
+        <div class="card-body">
+          <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
+          <!-- <p class="card-text">Base Experience: {{ pokemon.base_experience }}</p>
+          <p class="card-text">HP Base Stat: {{ pokemon.hp_base_stat }}</p>
+          <p class="card-text">Defense Base Stat: {{ pokemon.defense_base_stat }}</p>
+          <p class="card-text">Attack Base Stat: {{ pokemon.attack_base_stat }}</p>
+          <p class="card-text">Ability Name: {{ pokemon.ability_name }}</p> -->
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endfor %}
+
+{% endblock %}
+
+<!-- vvv working just not pretty -->
+<!-- <h1>The Ops' Teams</h1>
+<h2>{% for user in other_users %}
+  <li>{{ user.first_name }}'s Team: 
+    {% endfor %} </h2>
+    
+<div class="card-container">
+  <div class="card" style="width: 18rem;"></div>
     {% for user in other_users %}
       <li>{{ user.first_name }}'s Team: 
         {% for pokemon in user.team_pokemons %}
@@ -20,5 +52,4 @@ The Ops Teams
         {% endfor %}
       </li>
     {% endfor %}
-  </ul>
-{% endblock %}
+</div> -->

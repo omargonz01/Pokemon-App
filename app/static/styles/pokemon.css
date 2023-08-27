@@ -1,21 +1,27 @@
 html, body {
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    margin: 0; 
+    /* Remove default margin */
     background: #304352;
     background: -webkit-linear-gradient(to top, #d7d2cc, #304352);
     background: linear-gradient(to top, #d7d2cc, #304352);
     font-family: 'ubuntu', sans-serif;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed; 
+    /* Keep the background fixed as you scroll */
 }
 
 .card-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
+    flex-wrap: wrap; 
+    /* Allow cards to wrap to the next line */
+    justify-content: space-between; 
+    /* Distribute cards with even space between */
+    margin: 20px; 
+    /* Add margin to all sides */
+    gap: 20px; 
+    /* Add gap between cards */
 }
 
 .form-control {
@@ -50,3 +56,24 @@ html, body {
 .form-container {
     margin-top: 20px; 
 }
+
+h2 {
+    margin: 10px;
+    font-family: 'ubuntu', sans-serif;
+    font-size: 40px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    margin: 10px;
+    font-family: 'ubuntu', sans-serif;
+    font-size: 60px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 15px 15px 15px rgba(239, 78, 78, 0.3);
+}
+

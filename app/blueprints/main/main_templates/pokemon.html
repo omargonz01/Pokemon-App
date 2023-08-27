@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-Pokemanes
+Search Pokemanes
 {% endblock %}
 
 {% block content %}
@@ -47,15 +47,20 @@ Pokemanes
     <h2>Your Team</h2>
     <div class="card-container">
         {% for pokemon in current_user.team_pokemons %}
-            <div class="card" style="width: 18rem;">
-                <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ pokemon.name }}</h5>
-                </div>
-                <div class="card-body"> 
-                    <a href="{{ url_for('main.release_pokemon', pokemon_id=pokemon.id) }}" class="btn btn-danger">Release</a>
-                </div>
+        <div class="card" style="width: 18rem;">
+            <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ pokemon.name }}</h5>
+                <p class="card-text">Base Experience: {{ pokemon.base_experience }}</p>
+                <p class="card-text">HP Base Stat: {{ pokemon.hp_base_stat }}</p>
+                <p class="card-text">Defense Base Stat: {{ pokemon.defense_base_stat }}</p>
+                <p class="card-text">Attack Base Stat: {{ pokemon.attack_base_stat }}</p>
+                <p class="card-text">Ability Name: {{ pokemon.ability_name }}</p>
             </div>
+            <div class="card-body"> 
+                <a href="{{ url_for('main.release_pokemon', pokemon_id=pokemon.id) }}" class="btn btn-danger">Release</a>
+            </div>
+        </div>
         {% endfor %}
     </div>
 {% endif %}

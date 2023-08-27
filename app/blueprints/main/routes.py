@@ -4,6 +4,8 @@ from flask_login import login_required, current_user
 import requests 
 from ..auth.forms import PokemaneForm
 from app.models import Pokemon, teams, db, User
+from .battle_logic import Pokemon_battle, execute_battle  
+import random
 
 
 @main.route("/")
@@ -113,7 +115,55 @@ def release_pokemon(pokemon_id):
     
     return redirect(url_for('main.team'))  
 
+@main.route('/battle', methods=['GET', 'POST'])
+@login_required
+def battle():
+    selected_enemy_user_id = request.args.get('enemy_user_id')
+    selected_enemy_user = User.query.get(selected_enemy_user_id)
 
+    if request.method == 'POST':
+        user_team = [Pokemon_battle(
+            pokemon.name,
+            pokemon.hp_base_stat,
+            pokemon.attack_base_stat,
+            pokemon.defense_base_stat,
+            sprite_url=pokemon.sprite_url
+        ) for pokemon in current_user.team_pokemons]
+
+        enemy_team = [Pokemon_battle(
+            pokemon.name,
+            pokemon.hp_base_stat,
+            pokemon.attack_base_stat,
+            pokemon.defense_base_stat,
+            sprite_url=pokemon.sprite_url
+        ) for pokemon in selected_enemy_user.team_pokemons]
+
+        winner = execute_battle(user_team, enemy_team)
+
+        if winner == "user":
+            flash("Congratulations! Your team won the battle!")
+        elif winner == "enemy":
+            flash("Oh no! Your team lost the battle!")
+
+        return render_template('battle.html', user_team=user_team, enemy_team=enemy_team, selected_enemy_user=selected_enemy_user, selected_enemy_user_id=selected_enemy_user_id)
+    else:
+        user_team = [Pokemon_battle(
+            pokemon.name,
+            pokemon.hp_base_stat,
+            pokemon.attack_base_stat,
+            pokemon.defense_base_stat,
+            sprite_url=pokemon.sprite_url
+        ) for pokemon in current_user.team_pokemons]
+
+        enemy_team = [Pokemon_battle(
+            pokemon.name,
+            pokemon.hp_base_stat,
+            pokemon.attack_base_stat,
+            pokemon.defense_base_stat,
+            sprite_url=pokemon.sprite_url
+        ) for pokemon in selected_enemy_user.team_pokemons]
+
+        return render_template('battle.html', user_team=user_team, enemy_team=enemy_team, selected_enemy_user=selected_enemy_user)
 
 
 # -------------------------semi working  route V1 - did not add to table - bad redirects 

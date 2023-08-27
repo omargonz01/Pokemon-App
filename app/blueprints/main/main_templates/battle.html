@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="../static/styles/pokemon.css">
+{% endblock %}
+
+{% block title %}
+    LFG To Battle
+{% endblock %}
+
+{% block content %}
+    {% include './includes/nav.html' %}
+
+    {% for message in get_flashed_messages() %}
+        <div class="flash-message">{{ message }}</div>
+    {% endfor %}
+
+    <h1>Get Ready To Battle</h1>
+
+        <h2>Your Team:</h2>
+        
+        <div class="card-container">
+            {% for pokemon in user_team %}
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ pokemon.name }}</h5>
+                        <p class="card-text">HP: {{ pokemon.hp }}</p>
+                        <p class="card-text">Attack: {{ pokemon.attack }}</p>
+                        <p class="card-text">Defense: {{ pokemon.defense }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+
+        <h2>{{ selected_enemy_user.first_name }}'s Team:</h2>
+        
+        <div class="card-container">
+            {% for pokemon in enemy_team %}
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ pokemon.name }}</h5>
+                        <p class="card-text">HP: {{ pokemon.hp }}</p>
+                        <p class="card-text">Attack: {{ pokemon.attack }}</p>
+                        <p class="card-text">Defense: {{ pokemon.defense }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            
+        </div>
+
+        <form method="POST">
+            <button type="submit" class="btn btn-primary">Start Battle</button>
+        </form>
+
+{% endblock %}
