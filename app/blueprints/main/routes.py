@@ -141,15 +141,16 @@ def battle():
 
     battle_state = None
     messages = []
+    messages2 = []
     if request.method == 'POST':
-        battle_state, messages = execute_battle_step(user_team, enemy_team, current_step)
+        battle_state, messages, messages2 = execute_battle_step(user_team, enemy_team, current_step)
     
     if battle_state == "user":
-        flash("Congratulations! Your team won the battle!")
+        flash("Noiceee! Your team won the battle! Great Success!", "success")
     elif battle_state == "enemy":
-        flash("Oh no! Your team lost the battle!")
+        flash("Oh no! Your team lost the battle! Edit your team and come back again playa", "danger")
 
-    return render_template('battle.html', battle_state=battle_state, selected_enemy_user=selected_enemy_user, current_step=current_step, user_team=user_team, enemy_team=enemy_team, messages=messages)
+    return render_template('battle.html', battle_state=battle_state, selected_enemy_user=selected_enemy_user, current_step=current_step, user_team=user_team, enemy_team=enemy_team, messages=messages, messages2=messages2)
 
 
 # -------------------------semi working  route V1 - did not add to table - bad redirects 

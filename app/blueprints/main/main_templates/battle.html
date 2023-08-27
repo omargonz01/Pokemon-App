@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block styles %}
-    <link rel="stylesheet" href="../static/styles/pokemon.css">
+    <link rel="stylesheet" href="../static/styles/battle.css">
 {% endblock %}
 
 {% block title %}
@@ -11,10 +11,6 @@
 {% block content %}
     {% include './includes/nav.html' %}
 
-    {% for message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %}
-
     <h1>Battle Progress</h1>
 
     {% if battle_state %}
@@ -22,6 +18,16 @@
     {% else %}
         <h2>Battle Step: {{ current_step }}</h2>
     {% endif %}
+
+    <div style="display: flex; justify-content: space-between;">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+
+    {% for message in messages2 %}
+    <p>{{ message }}</p>
+    {% endfor %}
 
     <h2>Your Team:</h2>
     <div class="card-container">
@@ -39,6 +45,16 @@
     </div>
 
     <h2>{{ selected_enemy_user.first_name }}'s Team:</h2>
+
+    {% if not battle_state %}
+    <div style="text-align: center;">
+        <form method="POST">
+            <input type="hidden" name="step" value="{{ current_step + 1 }}">
+            <button type="submit" class="btn btn-primary">Attack</button>
+        </form>
+    </div>
+    {% endif %}
+
     <div class="card-container">
         {% for pokemon in enemy_team %}
             <div class="card" style="width: 18rem;">
@@ -53,11 +69,6 @@
         {% endfor %}
     </div>
 
-    {% if not battle_state %}
-        <form method="POST">
-            <input type="hidden" name="step" value="{{ current_step + 1 }}">
-            <button type="submit" class="btn btn-primary">Next Step</button>
-        </form>
-    {% endif %}
+    
 
 {% endblock %}
