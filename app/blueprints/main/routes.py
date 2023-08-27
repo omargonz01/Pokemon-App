@@ -81,13 +81,13 @@ def catch_pokemon(pokemon_name):
         pokemon = Pokemon.query.filter_by(name=pokemon_name).first()
         
         if pokemon in current_user.team_pokemons:
-            flash(f"You already have {pokemon.name} in your team.", "warning")
+            flash(f"WYD!? You already have {pokemon.name} in your team...", "warning")
         elif current_user.can_add_pokemon_to_team():
             current_user.team_pokemons.append(pokemon)
             db.session.commit()
             flash(f"You caught {pokemon.name}!", "success")
         else:
-            flash("Your team is full. Release a Pokémon before adding more.", "danger")
+            flash("WYD?! Your team is full. Release a Pokémon before adding more...", "danger")
         return redirect(url_for('main.get_pokemanes'))
     else:
         return redirect(url_for('main.get_pokemanes'))
@@ -145,9 +145,9 @@ def battle():
     if request.method == 'POST':
         battle_state, messages, messages2 = execute_battle_step(user_team, enemy_team, current_step)
     
-    if battle_state == "user":
+    if battle_state == "You Have Defeated The Ops":
         flash("Noiceee! Your team won the battle! Great Success!", "success")
-    elif battle_state == "enemy":
+    elif battle_state == "The Enemy Has Defeated You":
         flash("Oh no! Your team lost the battle! Edit your team and come back again playa", "danger")
 
     return render_template('battle.html', battle_state=battle_state, selected_enemy_user=selected_enemy_user, current_step=current_step, user_team=user_team, enemy_team=enemy_team, messages=messages, messages2=messages2)

@@ -26,7 +26,7 @@ Search Pokemanes
         <div class="card" style="width: 18rem;">
             <img src="{{ pokemanes_dict.sprite_url }}" class="card-img-top" alt="{{ pokemanes_dict.name }}">
             <div class="card-body">
-                <h5 class="card-title">{{ pokemanes_dict.name }}</h5>
+                <h5 class="card-title">{{ pokemanes_dict.name.title() }}</h5>
                 <p class="card-text">Base Experience: {{ pokemanes_dict.base_experience }}</p>
             </div>
             <ul class="list-group list-group-flush">
@@ -50,7 +50,7 @@ Search Pokemanes
         <div class="card" style="width: 18rem;">
             <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
             <div class="card-body">
-                <h5 class="card-title">{{ pokemon.name }}</h5>
+                <h5 class="card-title">{{ pokemon.name.title() }}</h5>
                 <p class="card-text">Base Experience: {{ pokemon.base_experience }}</p>
                 <p class="card-text">HP Base Stat: {{ pokemon.hp_base_stat }}</p>
                 <p class="card-text">Defense Base Stat: {{ pokemon.defense_base_stat }}</p>

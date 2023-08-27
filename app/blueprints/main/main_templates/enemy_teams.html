@@ -22,7 +22,7 @@ The Ops Teams
   <div class="card-container">
     {% for pokemon in user.team_pokemons %}
       <div class="card" style="width: 18rem;">
-        <h5 class="card-title">{{ pokemon.name.title() }}</h5>
+        <h5 class="card-title" style="text-align: center;">{{ pokemon.name.title() }}</h5>
         
         <div class="card-body">
           <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">

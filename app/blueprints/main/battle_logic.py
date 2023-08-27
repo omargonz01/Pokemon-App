@@ -23,9 +23,9 @@ def execute_battle_step(user_team, enemy_team, current_step, max_moves=10):
         enemy_hp = sum(pokemon.hp for pokemon in enemy_team)
 
         if user_hp > enemy_hp:
-            return "user", [], []
+            return "You Have Defeated The Ops", [], []
         elif enemy_hp > user_hp:
-            return "enemy", [], []
+            return "The Enemy Has Defeated You", [], []
         else:
             return "draw", [], []
 
@@ -51,14 +51,14 @@ def execute_battle_step(user_team, enemy_team, current_step, max_moves=10):
                 enemy_pokemon.hp -= user_damage
                 if enemy_pokemon.hp <= 0:
                     enemy_pokemon.hp = 0
-                    messages2.append(f"{enemy_pokemon.name} has fainted!")
+                    messages2.append(f"{enemy_pokemon.name} got rekt!")
                 messages.append(f"{user_pokemon.name} dealt {user_damage} damage to {enemy_pokemon.name}")
 
             if enemy_damage > 0:
                 user_pokemon.hp -= enemy_damage
                 if user_pokemon.hp <= 0:
                     user_pokemon.hp = 0
-                    messages2.append(f"{user_pokemon.name} has fainted!")
+                    messages2.append(f"{user_pokemon.name} got rekt!")
                 messages.append(f"{enemy_pokemon.name} dealt {enemy_damage} damage to {user_pokemon.name}")
 
     return None, messages, messages2

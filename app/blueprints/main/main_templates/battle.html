@@ -19,56 +19,67 @@
         <h2>Battle Step: {{ current_step }}</h2>
     {% endif %}
 
-    <div style="display: flex; justify-content: space-between;">
-        {% for message in messages %}
-            <p class="message">{{ message }}</p>
-        {% endfor %}
-    </div>
-
-    {% for message in messages2 %}
-    <p>{{ message }}</p>
-    {% endfor %}
-
-    <h2>Your Team:</h2>
-    <div class="card-container">
-        {% for pokemon in user_team %}
-            <div class="card" style="width: 18rem;">
-                <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ pokemon.name }}</h5>
-                    <p class="card-text">HP: {{ pokemon.hp }}</p>
-                    <p class="card-text">Attack: {{ pokemon.attack }}</p>
-                    <p class="card-text">Defense: {{ pokemon.defense }}</p>
-                </div>
+    <div class="team-container">
+        <div class="team">
+            <div style="display: flex; justify-content: center;">
+                {% for message in messages %}
+                    <p class="message">{{ message }}</p>
+                {% endfor %}
+                {% for message in messages2 %}
+                    <p class="messages2">{{ message }}</p>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
     </div>
 
-    <h2>{{ selected_enemy_user.first_name }}'s Team:</h2>
+   
 
-    {% if not battle_state %}
-    <div style="text-align: center;">
-        <form method="POST">
-            <input type="hidden" name="step" value="{{ current_step + 1 }}">
-            <button type="submit" class="btn btn-primary">Attack</button>
-        </form>
-    </div>
-    {% endif %}
-
-    <div class="card-container">
-        {% for pokemon in enemy_team %}
-            <div class="card" style="width: 18rem;">
-                <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ pokemon.name }}</h5>
-                    <p class="card-text">HP: {{ pokemon.hp }}</p>
-                    <p class="card-text">Attack: {{ pokemon.attack }}</p>
-                    <p class="card-text">Defense: {{ pokemon.defense }}</p>
-                </div>
+    <div class="team-container">
+        <div class="team">
+            <h2>Your Team:</h2>
+            <div class="card-container">
+                {% for pokemon in user_team %}
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pokemon.name.title() }}</h5>
+                            <p class="card-text">HP: {{ pokemon.hp }}</p>
+                            <p class="card-text">Attack: {{ pokemon.attack }}</p>
+                            <p class="card-text">Defense: {{ pokemon.defense }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
+        </div>
 
-    
+        <div class="team">
+            <div style="display: flex; justify-content: space-between;">
+                <h2>{{ selected_enemy_user.first_name }}'s Team:</h2>
+
+                {% if not battle_state %}
+                <div>
+                    <form method="POST">
+                        <input type="hidden" name="step" value="{{ current_step + 1 }}">
+                        <button type="submit" class="btn btn-primary">Attack</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="card-container">
+                {% for pokemon in enemy_team %}
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ pokemon.sprite_url }}" class="card-img-top" alt="{{ pokemon.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pokemon.name.title() }}</h5>
+                            <p class="card-text">HP: {{ pokemon.hp }}</p>
+                            <p class="card-text">Attack: {{ pokemon.attack }}</p>
+                            <p class="card-text">Defense: {{ pokemon.defense }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

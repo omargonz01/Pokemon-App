@@ -41,6 +41,7 @@ html, body {
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
 .btn:hover {
@@ -78,9 +79,17 @@ h1 {
 }
 
 .message {
-    color: #EE3209;
+    color: #11ef71;
     font-weight: bold;
     text-align: center;
+    text-shadow: 15px 15px 15px rgba(247, 241, 241, 0.3);
+}
+
+.messages2 {
+    color: #523F30; /* Adjust the color as needed */
+    font-weight: bold; /* Adjust the font weight as needed */
+    text-align: center; /* Adjust the text alignment as needed */
+    text-shadow: 15px 15px 15px rgba(247, 241, 241, 0.3);
 }
 
 .team-container {
@@ -92,7 +101,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50%;
+    width: 100%;
 }
 
 .card-container {
@@ -101,4 +110,10 @@ h1 {
     justify-content: center;
     margin: 20px;
     gap: 20px;
+}
+
+.message, .messages2 {
+    border: 1px dashed red;
+    padding: 5px;
+    margin: 10px;
 }
