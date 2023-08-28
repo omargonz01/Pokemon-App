@@ -4,32 +4,31 @@ from flask_login import LoginManager
 from flask_migrate import Migrate 
 from .models import db, User
 
-def create_app():
 
-    app = Flask(__name__)
 
-    app.config.from_object(Config)
+app = Flask(__name__)
 
-    login_manager = LoginManager()
+app.config.from_object(Config)
 
-    db.init_app(app)
-    migrate = Migrate(app, db)
-    login_manager.init_app(app)
+login_manager = LoginManager()
 
-    # login manager settings
-    login_manager.login_view = 'login'
-    login_manager.login_message_category = 'danger'
+db.init_app(app)
+migrate = Migrate(app, db)
+login_manager.init_app(app)
 
-    # Importing Our Blueprints
-    from app.blueprints.auth import auth
-    from app.blueprints.main import main
+# login manager settings
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'danger'
 
-    # Registering Our Blueprints
-    app.register_blueprint(auth)
-    app.register_blueprint(main)
+# Importing Our Blueprints
+from app.blueprints.auth import auth
+from app.blueprints.main import main
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(user_id)
+# Registering Our Blueprints
+app.register_blueprint(auth)
+app.register_blueprint(main)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
     
-    return app
